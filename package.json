@@ -1,6 +1,6 @@
 {
   "name": "npm-analytics",
-  "version": "0.9.0",
+  "version": "1.0.1",
   "description": "Get statitics about npm packages",
   "main": "distrib/app/index.html",
   "scripts": {
