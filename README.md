@@ -1,5 +1,5 @@
  # npm-analytics
-
+ 
  <div style="display:inline">
 
 [![build](https://travis-ci.org/Sylvain59650/npm-analytics.png?branch=master)](https://travis-ci.org/Sylvain59650/npm-analytics)
@@ -11,6 +11,7 @@
 ![tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)
 ![license](https://img.shields.io/npm/l/npm-analytics.svg)
 ![hits](http://hits.dwyl.com/Sylvain59650/npm-analytics.svg)
+[![Gitter](https://badges.gitter.im/npm-analytics/Lobby.svg)](https://gitter.im/npm-analytics/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 </div>
  
@@ -19,4 +20,3 @@
  
 The lastest version of this document is available on [Github > npm-analytics](https://github.com/Sylvain59650/npm-analytics/blob/master/README.md)
 </div>
-
