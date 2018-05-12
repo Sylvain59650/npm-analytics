@@ -1,0 +1,151 @@
+<html>
+
+<head>
+  <script src="../distrib/htmlElement.min.js"></script>
+  <style>
+    #t1 {
+      font-size: 10pt
+    }
+    
+    .cl {
+      border: solid 1px red
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    function h_addClass(id, className) {
+      var t1 = document.querySelector(id);
+      t1.addClass(className);
+    }
+
+    function h_removeClass(id, className) {
+      var t1 = document.querySelector(id);
+      t1.removeClass(className);
+    }
+
+    function h_toggleClass(id, className) {
+      var t1 = document.querySelector(id);
+      t1.toggleClass(className);
+    }
+
+    function h_css(id, css) {
+      var t1 = document.querySelector(id);
+      t1.css(css);
+    }
+
+    function h_outerSize(id) {
+      var t1 = document.querySelector(id);
+      alert(t1.outerWidth() + "x" + t1.outerHeight());
+    }
+
+    function h_show(id) {
+      var t1 = document.querySelector(id);
+      t1.show();
+    }
+
+    function h_hide(id) {
+      var t1 = document.querySelector(id);
+      t1.hide();
+    }
+
+    function h_toggleVisible(id) {
+      var t1 = document.querySelector(id);
+      t1.toggleVisible();
+    }
+
+
+    function h_event(id, eventName, fn) {
+      var t1 = document.querySelector(id);
+      t1.on(eventName, fn);
+    }
+
+    function h_outerHtml(id) {
+      var t1 = document.querySelector(id);
+      console.log(t1.outerHtml());
+    }
+
+    function clickOnMe(evt) {
+      alert(evt);
+    }
+
+    function loadJson() {
+      document.getJSON("./data.json", function(data) {
+        var target = document.querySelector("#json");
+        target.html(data);
+        console.log(data[0]);
+      });
+    }
+
+    function h_newElement() {
+      var elem = newElement("span", {
+        class: "titi",
+        width: 100
+      }, "<h1>coucou</h1>");
+      document.body.insertAdjacentElement("beforeend", elem);
+    }
+
+    function al() {
+      alert("toto");
+    }
+
+    function h_attachEvent(id, event, fn) {
+      var elem = document.querySelector(id);
+      elem.on(event, fn);
+    }
+
+    function h_detachEvent(id, event, fn) {
+      var elem = document.querySelector(id);
+      elem.off(event, fn);
+    }
+  </script>
+
+  <script>
+    document.ready(clickOnMe);
+    //loadJson();
+  </script>
+
+  <div>mon texte</div>
+  <input type="text" id="t1" />
+  <button type="button" onclick="h_addClass('#t1','cl')">addClass</button>
+  <button type="button" onclick="h_removeClass('#t1','cl')">removeClass</button>
+  <button type="button" onclick="h_toggleClass('#t1','cl')">Toggle</button>
+  <button type="button" onclick="h_css('#t1',{position:'absolute',left:'200px'})">CSS</button>
+  <button type="button" onclick="h_outerSize('#t1')">outerSize</button>
+  <button type="button" onclick="h_hide('#t1')">hide</button>
+  <button type="button" onclick="h_show('#t1')">show</button>
+  <button type="button" onclick="h_toggleVisible('#t1')">togglVisible</button>
+  <hr/>
+  <textarea id="t2" rows="10" cols="80">blabla</textarea>
+  <button type="button" onclick="h_addClass('#t2','cl')">addClass</button>
+  <button type="button" onclick="h_removeClass('#t2','cl')">removeClass</button>
+  <button type="button" onclick="h_toggleClass('#t2','cl')">Toggle</button>
+  <button type="button" onclick="h_css('#t2',{position:'absolute',left:200})">CSS</button>
+  <button type="button" onclick="h_outerSize('#t2')">outerSize</button>
+  <hr/>
+  <div id="t3">blabla</textarea>
+    <button type="button" onclick="h_addClass('#t3','cl')">addClass</button>
+    <button type="button" onclick="h_removeClass('#t3','cl')">removeClass</button>
+    <button type="button" onclick="h_toggleClass('#t3','cl')">Toggle</button>
+    <button type="button" onclick="h_css('#t3',{'background-color':'blue'})">CSS</button>
+
+    <button type="button" onclick="h_outerSize('#t3')">outerSize</button>
+
+    <hr/>
+    <button type="button" id="t4">Ok</textarea>
+    <button type="button" onclick="h_event('#t4','onclick',clickOnMe)">click</button>
+    <button type="button" onclick="h_outerHtml('#t4')">outerHTML</button>
+
+    <div id="json">
+
+    </div>
+
+    <button type="button" onclick="h_newElement()">newElement</button>
+
+    <button type="button" id="not">nothing</button>
+    <button type="button" onclick="h_attachEvent('#not','click',al)">attachEvent</button>
+    <button type="button" onclick="h_detachEvent('#not','click',al)">attachEvent</button>
+</body>
+
+</html>
