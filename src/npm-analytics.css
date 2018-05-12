@@ -1,0 +1,25 @@
+table.stats {
+  border: solid 1px gray;
+}
+
+table.stats header tr th {
+  text-align: center;
+}
+
+table.stats header tr {
+  background-color: cornflowerblue;
+}
+
+tr:nth-child(even) {
+  background-color: rgb(190, 186, 186);
+}
+
+td.num {
+  text-align: right;
+}
+
+#f1 {
+  background-color: rgb(199, 198, 196);
+  border-radius: 8%;
+  padding: 5px;
+}
