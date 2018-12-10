@@ -31,27 +31,21 @@
   }
 
   function updateGraphics() {
+    var urlCorsBypass = "https://cors-anywhere.herokuapp.com/";
     var start = document.querySelector("#start").value;
     var end = document.querySelector("#end").value;
     var typeSearch = document.querySelector("#typeSearch").value;
     var search = document.querySelector("#search").value;
     var startDate = moment(start);
     var endDate = moment(end);
-    var url = "http://localhost:59867/api/Proxy/CallForMe";
-    // url = "http://proxy.lesprojets.net/api/Proxy/CallForMe";
     localStorage.setItem("lastSearch", JSON.stringify({ typeSearch: typeSearch, search: search }));
-    //url = "http://proxy.lesprojets.net/api/Proxy/CallForMe";
     if (typeSearch === "User") {
-      http.postJSON(url, {
-          url: "https://api.npms.io/v2/search?q=maintainer:" + search,
-          method: "GET"
-        })
+      http.getJSON(urlCorsBypass + "https://api.npms.io/v2/search?q=maintainer:" + search)
         .then(data => {
           var packages = data.results.map(x => x.package);
-          var promises = packages.map(x => http.postJSON(url, {
-            url: ["https://api.npmjs.org/downloads/range/", startDate.format("YYYY-MM-DD"), ":", endDate.format("YYYY-MM-DD"), "/", x.name].join(""),
-            method: "GET"
-          }));
+          var promises = packages.map(
+            x => http.getJSON(urlCorsBypass +
+              ["https://api.npmjs.org/downloads/range/", startDate.format("YYYY-MM-DD"), ":", endDate.format("YYYY-MM-DD"), "/", x.name].join("")));
           stats = [];
           chartData = {};
           Promise.all(promises).then(function(response) {
@@ -67,10 +61,7 @@
         "/",
         search
       ].join("");
-      http.postJSON(url, {
-        url: urlNpm,
-        method: "GET"
-      }).then(data => {
+      http.getJSON(urlCorsBypass + urlNpm).then(data => {
         stats = [data];
         redraw();
       })
@@ -80,13 +71,15 @@
   function redrawArray() {
     var datasets = [];
     var total = 0;
-    for (var i = 0; i < stats.length; i++) {
-      var dataset = {
-        label: stats[i].package,
-        downloads: stats[i].downloads.reduce((accu, cur) => accu += cur.downloads, 0)
-      };
-      total += dataset.downloads;
-      datasets.push(dataset);
+    if (stats.length > 0) {
+      for (var i = 0; i < stats.length; i++) {
+        var dataset = {
+          label: stats[i].package,
+          downloads: stats[i].downloads.reduce((accu, cur) => accu += cur.downloads, 0)
+        };
+        total += dataset.downloads;
+        datasets.push(dataset);
+      }
     }
     var st = "";
     for (var d of datasets) {
@@ -99,17 +92,19 @@
   var chart = null;
 
   function redraw() {
-    var colors = createColorsArrays(stats.length);
-    redrawArray();
-    chartData.labels = stats[0].downloads.map(x => x.day);
-    chartData.datasets = [];
-    for (var i = 0; i < stats.length; i++) {
-      var dataset = {
-        label: stats[i].package,
-        data: stats[i].downloads.map(x => x.downloads),
-        backgroundColor: colors[i]
+    if (stats.length) {
+      var colors = createColorsArrays(stats.length);
+      redrawArray();
+      chartData.labels = stats[0].downloads.map(x => x.day);
+      chartData.datasets = [];
+      for (var i = 0; i < stats.length; i++) {
+        var dataset = {
+          label: stats[i].package,
+          data: stats[i].downloads.map(x => x.downloads),
+          backgroundColor: colors[i]
+        }
+        chartData.datasets.push(dataset);
       }
-      chartData.datasets.push(dataset);
     }
     if (chart === null) {
       var ctx = document.getElementById("myChart");

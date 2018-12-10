@@ -6,18 +6,19 @@ const watch = require("gulp-watch");
 
 const browserSync = require("browser-sync").create();
 
+// "./node_modules/moment/min/moment.min.js",
 
 
 gulp.task("bower_components.min.js", () => {
-  return gulp.src(["./node_modules/htmlelement-extension/distrib/htmlelement.min.js",
+  return gulp.src([
+      "./node_modules/htmlelement-extension/distrib/htmlelement.min.js",
       "./node_modules/promise-polyfill/dist/polyfill.min.js",
-      "./node_modules/chart.js/dist/Chart.bundle.js",
-      "./node_modules/moment/min/moment.min.js"
+      "./node_modules/chart.js/dist/Chart.js"
     ])
     .pipe(concat("app/bower_components.min.js"))
     .pipe(babel({
       presets: ["es2015"],
-      compact: true
+      compact: false
     }))
     .pipe(gulp.dest("./distrib"));
 });
@@ -34,7 +35,7 @@ gulp.task("npm-analytics.min.js", () => {
     .pipe(concat("app/npm-analytics.min.js"))
     .pipe(babel({
       presets: ["es2015"],
-      compact: true
+      compact: false
     }))
     //.pipe(uglify())
     //.on('error', function(err) { gutil.log(gutil.colors.red('[Error]'), err.toString()); })
@@ -44,15 +45,11 @@ gulp.task("npm-analytics.min.js", () => {
 
 
 gulp.task("watch:npm-analytics.min.js", function() {
-  watch("./src/**.js", function() {
-    gulp.run("npm-analytics.min.js");
-  });
+  watch("./src/**.js", gulp.series("npm-analytics.min.js"));
 });
 
 gulp.task("watch:html", function() {
-  watch("./src/**.html", function() {
-    gulp.run("html");
-  });
+  watch("./src/**.html", gulp.series("html"));
 });
 
 gulp.task("npm-analytics.min.css", () => {
@@ -65,15 +62,11 @@ gulp.task("npm-analytics.min.css", () => {
 });
 
 gulp.task("watch:html", function() {
-  watch("./src/**.html", function() {
-    gulp.run("html");
-  });
+  watch("./src/**.html", gulp.series("html"));
 });
 
 gulp.task("watch:npm-analytics.min.css", function() {
-  watch("./src/**.css", function() {
-    gulp.run("npm-analytics.min.css");
-  });
+  watch("./src/**.css", gulp.series("npm-analytics.min.css"));
 });
 
 gulp.task("serve", function() {
@@ -84,9 +77,9 @@ gulp.task("serve", function() {
   });
 });
 
-gulp.task("default", ["npm-analytics.min.js"]);
+gulp.task("default", gulp.series("npm-analytics.min.js"));
 
 
-gulp.task("all", ["default", "bower_components.min.js", "html", "npm-analytics.min.css"]);
+gulp.task("all", gulp.series("default", "bower_components.min.js", "html", "npm-analytics.min.css"));
 
-gulp.task("watch", ["watch:npm-analytics.min.js", "watch:html", "watch:npm-analytics.min.css"]);
+gulp.task("watch", gulp.parallel("watch:npm-analytics.min.js", "watch:html", "watch:npm-analytics.min.css"));
