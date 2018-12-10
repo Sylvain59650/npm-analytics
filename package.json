@@ -45,9 +45,9 @@
     "gulp-watch": "^5.0.1"
   },
   "dependencies": {
-    "chart.js": "^2.7.2",
-    "htmlelement-extension": "^0.8.1",
-    "moment": "^2.22.0",
+    "chart.js": "^2.7.3",
+    "htmlelement-extension": "^0.8.13",
+    "moment": "^2.22.2",
     "promise-polyfill": "7.1.0"
   }
 }

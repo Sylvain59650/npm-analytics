@@ -52,6 +52,11 @@ gulp.task("watch:html", function() {
   watch("./src/**.html", gulp.series("html"));
 });
 
+gulp.task("demo", function() {
+  return gulp.src(["./distrib/app/*.*"])
+    .pipe(gulp.dest("./docs/demo/"));
+})
+
 gulp.task("npm-analytics.min.css", () => {
   return gulp.src([
       "./src/*.css"
