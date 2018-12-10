@@ -35,7 +35,7 @@ gulp.task("npm-analytics.min.js", () => {
     .pipe(concat("app/npm-analytics.min.js"))
     .pipe(babel({
       presets: ["es2015"],
-      compact: false
+      compact: true
     }))
     //.pipe(uglify())
     //.on('error', function(err) { gutil.log(gutil.colors.red('[Error]'), err.toString()); })

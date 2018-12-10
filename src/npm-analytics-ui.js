@@ -30,6 +30,7 @@
     return arr;
   }
 
+
   function updateGraphics() {
     var urlCorsBypass = "https://cors-anywhere.herokuapp.com/";
     var start = document.querySelector("#start").value;
@@ -44,8 +45,7 @@
         .then(data => {
           var packages = data.results.map(x => x.package);
           var promises = packages.map(
-            x => http.getJSON(urlCorsBypass +
-              ["https://api.npmjs.org/downloads/range/", startDate.format("YYYY-MM-DD"), ":", endDate.format("YYYY-MM-DD"), "/", x.name].join("")));
+            x => http.getJSON(urlCorsBypass + ["https://api.npmjs.org/downloads/range/", startDate.format("YYYY-MM-DD"), ":", endDate.format("YYYY-MM-DD"), "/", x.name].join("")));
           stats = [];
           chartData = {};
           Promise.all(promises).then(function(response) {

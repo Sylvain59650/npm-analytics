@@ -20,3 +20,6 @@
  
 The lastest version of this document is available on [Github > npm-analytics](https://github.com/Sylvain59650/npm-analytics/blob/master/README.md)
 </div>
+
+# DEMO 
+<a href="https://sylvain59650.github.io/npm-analytics/demo/index.html">DEMO</a>
